@@ -17,7 +17,7 @@
 // - dbi: A database handle returned by [[dbi_open]]
 // - cursor: Address where the new [[cursor]] handle will be stored
 // - return: EINVAL on failure and 0 on success.
-export @symbol("mdb_cursor_open") fn cursor_open(txn: *txn, dbi: *dbi, cursor: *nullable *cursor) int;
+export @symbol("mdb_cursor_open") fn cursor_open(txn: *txn, dbi: *dbi, cursor: nullable **cursor) int;
 
 // Close a cursor handle.
 //
