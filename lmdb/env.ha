@@ -39,9 +39,9 @@ export @symbol("mdb_env_create") fn env_create(env: nullable **env) int;
 //		The feature is highly experimental.
 // - [[NOSUBDIR]]:
 //		By default, LMDB creates its environment in a directory whose
-//		pathname is given in \b path, and creates its data and lock files
-//		under that directory. With this option, \b path is used as-is for
-//		the database main data file. The database lock file is the \b path
+//		pathname is given in path, and creates its data and lock files
+//		under that directory. With this option, path is used as-is for
+//		the database main data file. The database lock file is the path
 //		with "-lock" appended.
 // - [[RDONLY]]:
 //		Open the environment in read-only mode. No write operations will be
@@ -146,3 +146,59 @@ export @symbol("mdb_env_open") fn env_open(env: *env, path: const *c::char, flag
 // Parameters:
 // - env: An environment handle returned by [[env_create]]
 export @symbol("mdb_env_close") fn env_close(env: *env) void;
+
+// Set the size of the memory map to use for this environment.
+//
+// The size should be a multiple of the OS page size. The default is
+// 10485760 bytes. The size of the memory map is also the maximum size
+// of the database. The value should be chosen as large as possible,
+// to accommodate future growth of the database.
+//
+// This function should be called after [[env_create]] and before [[env_open]].
+// It may be called at later times if no transactions are active in
+// this process. Note that the library does not check for this condition,
+// the caller must ensure it explicitly.
+//
+// The new size takes effect immediately for the current process but
+// will not be persisted to any others until a write transaction has been
+// committed by the current process. Also, only mapsize increases are
+// persisted into the environment.
+//
+// If the mapsize is increased by another process, and data has grown
+// beyond the range of the current mapsize, [[txn_begin]] will
+// return [[MAP_RESIZED]]. This function may be called with a size
+// of zero to adopt the new size.
+//
+// Any attempt to set a size smaller than the space already consumed
+// by the environment will be silently changed to the current size of the used space.
+//
+// Parameters
+// - env: An environment handle returned by [[env_create]]
+// - size: The size in bytes
+//
+// Return value: A non-zero error value on failure and 0 on success. Some possible
+// errors are:
+// - EINVAL - an invalid parameter was specified, or the environment has
+//   an active write transaction.
+export @symbol("mdb_env_set_mapsize") fn env_set_mapsize(env: *env, size_: size) int;
+
+// Set the maximum number of named databases for the environment.
+//
+// This function is only needed if multiple databases will be used in the
+// environment. Simpler applications that use the environment as a single
+// unnamed database can ignore this option.
+//
+// This function may only be called after [[env_create]] and before [[env_open]].
+//
+// Currently a moderate number of slots are cheap but a huge number gets
+// expensive: 7-120 words per transaction, and every [[dbi_open]]
+// does a linear search of the opened slots.
+//
+// Parameters
+// - env: An environment handle returned by [[env_create]]
+// - dbs: The maximum number of databases
+//
+// Return value: A non-zero error value on failure and 0 on success. Some possible
+// errors are:
+// - EINVAL - an invalid parameter was specified, or the environment is already open.
+export @symbol("mdb_env_set_maxdbs") fn env_set_maxdbs(env: *env, dbs: dbi) int;
