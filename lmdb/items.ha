@@ -16,7 +16,7 @@
 // Return value: A non-zero error value on failure and 0 on success. Some possible errors are:
 // - EACCES: an attempt was made to write in a read-only transaction.
 // - EINVAL: an invalid parameter was specified.
-export @symbol("mdb_del") fn del(txn: *txn, dbi: *dbi, key: *val, data: *val) int;
+export @symbol("mdb_del") fn del(txn: *txn, dbi: dbi, key: *val, data: *val) int;
 
 
 // Get items from a database.
@@ -42,7 +42,7 @@ export @symbol("mdb_del") fn del(txn: *txn, dbi: *dbi, key: *val, data: *val) in
 // Return value: A non-zero error value on failure and 0 on success. Some possible errors are:
 // - [[NOTFOUND]]: the key was not in the database
 // - EINVAL: an invalid parameter was specified
-export @symbol("mdb_get") fn get(txn: *txn, dbi: *dbi, key: *val, data: *val) int;
+export @symbol("mdb_get") fn get(txn: *txn, dbi: dbi, key: *val, data: *val) int;
 
 // Store items into a database.
 //
@@ -81,4 +81,4 @@ export @symbol("mdb_get") fn get(txn: *txn, dbi: *dbi, key: *val, data: *val) in
 // - [[TXN_FULL]]: the transaction has too many dirty pages
 // - EACCES: an attempt was made to write in a read-only transaction
 // - EINVAL: an invalid parameter was specified
-export @symbol("mdb_put") fn put(txn: *txn, dbi: *dbi, key: *val, data: *val, flags: uint) int;
+export @symbol("mdb_put") fn put(txn: *txn, dbi: dbi, key: *val, data: *val, flags: uint) int;
