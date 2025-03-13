@@ -1,5 +1,9 @@
 # hare-lmdb – Hare bindings for LMDB
 
+These are some Hare bindings for [LMDB](http://www.lmdb.tech/doc/).
+Not all features have bindings here yet; common functionality should however be
+present. Please feel free to expand them.
+
 ## License
 
 This inherits the OpenLDAP license from the original code. See the LICENSE
