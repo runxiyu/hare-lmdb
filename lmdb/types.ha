@@ -28,7 +28,7 @@ export type txn = opaque;
 // Other data items can in theory be from 0 to 0xffffffff bytes long.
 export type val = struct {
 	mv_size: size,
-	mv_data: *opaque,
+	mv_data: nullable *opaque,
 };
 
 // Unix permissions for creating files, or dummy definition for Windows
