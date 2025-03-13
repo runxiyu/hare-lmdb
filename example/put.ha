@@ -1,15 +1,27 @@
 use fmt;
+use io;
 use lmdb;
+use strings;
+use types;
 use types::c;
+use os;
 
 export fn main() void = {
-	const key = lmdb::val{
-		mv_size = 13,
-		mv_data = c::unterminatedstr("this is a key"): *opaque,
+	if (len(os::args) != 3) {
+		abort("need two arguments (db dir, key)");
 	};
+
+	const key = lmdb::val{
+		mv_size = len(strings::toutf8(os::args[2])),
+		mv_data = c::unterminatedstr(os::args[2]): *opaque,
+	};
+	
+	let v = io::drain(os::stdin)!;
+	defer free(v);
+
 	const val = lmdb::val{
-		mv_size = 15,
-		mv_data = c::unterminatedstr("this is a value"): *opaque,
+		mv_size = len(v),
+		mv_data = (*(&v: *types::slice)).data: *opaque,
 	};
 
 	let env: nullable *lmdb::env = null;
@@ -20,7 +32,7 @@ export fn main() void = {
 	};
 	let env: *lmdb::env = env as *lmdb::env;
 
-	let path = c::fromstr("./test.mdb");
+	let path = c::fromstr(os::args[1]);
 	defer free(path);
 	rc = lmdb::env_open(env, path, 0, 0o644);
 	if (rc != 0) {
