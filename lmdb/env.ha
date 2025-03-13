@@ -13,7 +13,7 @@ use types::c;
 // - env: The address where the new handle will be stored
 //
 // Return value: A non-zero error value on failure and 0 on success.
-export @symbol("mdb_env_create") fn env_create(env: nullable **env) int;
+export @symbol("mdb_env_create") fn env_create(env: *nullable *env) int;
 
 // Open an environment handle.
 // 

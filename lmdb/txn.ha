@@ -34,7 +34,7 @@
 // - [[READERS_FULL]] - a read-only transaction was requested and
 // -     the reader lock table is full. See [[env_set_maxreaders]].
 // - ENOMEM - out of memory.
-export @symbol("mdb_txn_begin") fn txn_begin(env: *env, parent: *txn, flags: uint, txn: nullable **txn) int;
+export @symbol("mdb_txn_begin") fn txn_begin(env: *env, parent: nullable *txn, flags: uint, txn: *nullable *txn) int;
 
 // Commit all the operations of a transaction into the database.
 // 
