@@ -30,3 +30,6 @@ export type val = struct {
 	mv_size: size,
 	mv_data: *opaque,
 };
+
+// Unix permissions for creating files, or dummy definition for Windows
+export type mode_t = u32;
