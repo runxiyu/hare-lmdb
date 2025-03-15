@@ -1,0 +1,11 @@
+export def FIXEDMAP = 0x01;
+export def NOSUBDIR = 0x4000;
+export def NOSYNC = 0x10000;
+export def RDONLY = 0x20000;
+export def NOMETASYNC = 0x40000;
+export def WRITEMAP = 0x80000;
+export def MAPASYNC = 0x100000;
+export def NOTLS = 0x200000;
+export def NOLOCK = 0x400000;
+export def NORDAHEAD = 0x800000;
+export def NOMEMINIT = 0x1000000;

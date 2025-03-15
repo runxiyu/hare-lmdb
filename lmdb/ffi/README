@@ -1,0 +1,4 @@
+These are raw unencumbered bindings for LMDB, except that mdb_/MDB_ prefixes
+have been removed, and nullable is added where necessary.
+
+Please refer to the official LMDB documentation at http://www.lmdb.tech/doc/
