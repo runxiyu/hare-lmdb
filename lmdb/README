@@ -1,0 +1,5 @@
+The lmdb module provides an interface to the Lightning Memory-Mapped Database
+Manager (LMDB).
+
+This is an abstraction over [[lmdb::ffi]], serving as a "Hare-style" wrapper
+around the raw FFI bindings.
